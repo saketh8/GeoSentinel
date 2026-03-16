@@ -68,6 +68,29 @@ Development of GeoSentinel during the contest led to several key insights regard
 
 ---
 
+## 🧪 Reproducible Testing
+
+Judges can verify the core functionality of GeoSentinel using the following steps:
+
+### 1. Verification of the Immersive UI
+- **Action**: Load the [Live Frontend](https://geosentinel-frontend-1044499038422.us-central1.run.app).
+- **Expectation**: The 3D globe should initialize in a dark "Command Room" atmosphere. The left panel should populate with live news from the GDELT stream.
+
+### 2. Multi-Layer Intelligence Toggle
+- **Action**: Open the **Planetary Intel** panel on the right. Toggle the **'Aviation'** and **'Conflicts'** layers.
+- **Expectation**: The globe should render 3D arcs for flights and pulsing red rings for conflict zones. Hovering over an arc should reveal a tactical aircraft tooltip.
+
+### 3. Gemini Live Agent (The "Beyond Text" Test)
+- **Action**: Click the **Microphone** button at the bottom center.
+- **Voice Command**: Say *"GeoSentinel, fly to France."*
+- **Expectation**: The agent should respond with audio via the Gemini Live API, geocode the location, and the camera should autonomously orbit to France. The intelligence panels should refresh to show France-specific data.
+
+### 4. Zero-Click Command Center
+- **Action**: Click the **[ 📊 COMMAND CENTER ]** button.
+- **Expectation**: A high-density tactical overlay (Masonry grid) should appear, displaying widgets like the **Pentagon Pizza Index** and **AI Strategic Posture**.
+
+---
+
 ## ☁️ Google Cloud Deployment (Bonus)
 
 We automate containerizing the entire stack and shipping it to **Google Cloud Run**.
