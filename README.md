@@ -115,7 +115,7 @@ GeoSentinel is fully architected for the Google Cloud ecosystem.
 ---
 
 ## 📹 Demonstration Video
-[Link to your <4-minute Video (YouTube/Vimeo)]
+[Watch the GeoSentinel OSINT Demo on YouTube](https://youtu.be/jE5fMiMhb_M)
 
 ---
 
