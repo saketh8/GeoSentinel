@@ -19,32 +19,23 @@ const NewsFeed: React.FC<NewsFeedProps> = ({ articles }) => {
     const [globalNews, setGlobalNews] = useState<NewsArticle[]>([]);
     const [isLoading, setIsLoading] = useState(true);
 
-    // Auto-fetch global news on mount
+    // Auto-fetch global news from backend proxy on mount
     const fetchGlobalNews = useCallback(async () => {
         setIsLoading(true);
         try {
-            const url = `https://api.gdeltproject.org/api/v2/doc/doc?query=crisis%20OR%20conflict%20OR%20breaking%20sourcelang:eng&mode=artlist&maxrecords=12&format=json&sort=DateDesc`;
-            const resp = await fetch(url);
-            if (!resp.ok) throw new Error(`GDELT ${resp.status}`);
-            const data = await resp.json();
-            const fetched = (data.articles || []).map((a: any) => ({
-                title: a.title || '',
-                url: a.url || '',
-                source: a.domain || '',
-                date: a.seendate || '',
-                image: a.socialimage || '',
-                tone: a.tone || 0,
-            }));
+            const resp = await fetch('http://localhost:8000/api/news/global');
+            if (!resp.ok) throw new Error(`Backend ${resp.status}`);
+            const fetched = await resp.json();
             setGlobalNews(fetched);
         } catch (err) {
             console.warn('Global news fetch failed:', err);
             setGlobalNews([
-                { title: 'UN Security Council Emergency Session — Middle East Crisis', source: 'Reuters', url: 'https://reuters.com', date: '2025-03-15', tone: -8, image: '', category: 'GEO-POL', rep: 'HIGH REP' },
-                { title: 'GPS Jamming Activity Surges Across Eastern Mediterranean', source: 'BBC', url: 'https://bbc.com', date: '2025-03-15', tone: -6, image: '', category: 'MILITARY', rep: 'HIGH REP' },
-                { title: 'Major Cyclone System Developing in Bay of Bengal', source: 'AP News', url: 'https://apnews.com', date: '2025-03-14', tone: -4, image: '', category: 'WEATHER', rep: 'HIGH REP' },
-                { title: 'Ukraine Frontline: Drone Warfare Intensifies', source: 'Al Jazeera', url: 'https://aljazeera.com', date: '2025-03-14', tone: -7, image: '', category: 'CONFLICT', rep: 'HIGH REP' },
-                { title: 'Red Sea Shipping Routes Disrupted by Houthi Attacks', source: 'CNN', url: 'https://cnn.com', date: '2025-03-14', tone: -5, image: '', category: 'LOGISTICS', rep: 'MED REP' },
-                { title: 'NATO Increases Satellite Surveillance Over Black Sea', source: 'The Guardian', url: 'https://theguardian.com', date: '2025-03-13', tone: -3, image: '', category: 'INTEL', rep: 'HIGH REP' },
+                { title: 'UN Security Council Emergency Session — Middle East Crisis', source: 'Reuters', url: 'https://reuters.com', date: '2025-03-18', tone: -8, image: '', category: 'GEO-POL', rep: 'HIGH REP' },
+                { title: 'GPS Jamming Activity Surges Across Eastern Mediterranean', source: 'BBC', url: 'https://bbc.com', date: '2025-03-18', tone: -6, image: '', category: 'MILITARY', rep: 'HIGH REP' },
+                { title: 'Major Cyclone System Developing in Bay of Bengal', source: 'AP News', url: 'https://apnews.com', date: '2025-03-17', tone: -4, image: '', category: 'WEATHER', rep: 'HIGH REP' },
+                { title: 'Ukraine Frontline: Drone Warfare Intensifies', source: 'Al Jazeera', url: 'https://aljazeera.com', date: '2025-03-17', tone: -7, image: '', category: 'CONFLICT', rep: 'HIGH REP' },
+                { title: 'Red Sea Shipping Routes Disrupted by Houthi Attacks', source: 'CNN', url: 'https://cnn.com', date: '2025-03-17', tone: -5, image: '', category: 'LOGISTICS', rep: 'MED REP' },
+                { title: 'NATO Increases Satellite Surveillance Over Black Sea', source: 'The Guardian', url: 'https://theguardian.com', date: '2025-03-16', tone: -3, image: '', category: 'INTEL', rep: 'HIGH REP' },
             ]);
         }
         setIsLoading(false);

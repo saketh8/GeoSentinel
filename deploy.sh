@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Configuration
-PROJECT_ID="YOUR_GCP_PROJECT_ID"
+PROJECT_ID="project-62ee5d68-cd7f-4ec4-a49"
 REGION="us-central1"
 BACKEND_SERVICE="geosentinel-backend"
 FRONTEND_SERVICE="geosentinel-frontend"
@@ -22,7 +22,7 @@ gcloud run deploy $BACKEND_SERVICE \
   --source . \
   --region $REGION \
   --allow-unauthenticated \
-  --set-env-vars="GEMINI_API_KEY=YOUR_GEMINI_API_KEY" \
+  --set-env-vars="GEMINI_API_KEY=AIzaSyBMrq6Vg5N1__Bq3rDHnVoxcAeKAwEZv88" \
   --port 8080
 cd ..
 

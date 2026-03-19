@@ -32,8 +32,8 @@ Development of GeoSentinel during the contest led to several key insights regard
 ---
 
 ## 🚀 Features
-- **3-Column Intelligence Layout**: Inspired by Palantir and Glint.trade, featuring a live global GDELT news feed, central 3D globe, and a reactive Planetary Intel panel.
-- **Glint.trade "Vision Terminal" Effects**: Features 3D Hexbin Activity Heatmaps revealing signal density, and floating 3D diamond "Whale Trades" (e.g., simulated Polymarket predictions).
+- **3-Column Intelligence Layout**: Inspired by Palantir and Glint.trade, featuring a **Live GDELT News Feed** (updated every 5 min via backend proxy) and a reactive Planetary Intel panel.
+- **Organic news-driven heatmaps**: Real-time "Sentinel Scores" (0-100) are now derived purely from extraction of current news events from GDELT headlines, with **Zero Mock Hotspots**.
 - **8 Interactive 3D Data Layers**: Flights (Arcs), Warships, Recon Satellites, Conflict Zones (Pulsing Rings), GPS Jamming, No-Fly Zones, Extreme Weather, and Prediction Markets.
 - **Agentic Voice Control**: Click the Mic button to talk natively to the Gemini Agent, which interprets intents (like `FLY_TO`) and autonomously orbits the camera to the spoken country.
 

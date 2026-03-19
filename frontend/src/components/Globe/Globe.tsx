@@ -17,6 +17,7 @@ const Globe: React.FC<GlobeProps> = ({ activeLayers, liveData, onCountryClick })
     const [GlobeComponent, setGlobeComponent] = useState<any>(null);
     const [error, setError] = useState<string | null>(null);
     const [countries, setCountries] = useState<any>({ features: [] });
+    const [tensionData, setTensionData] = useState<Record<string, number>>({});
 
     // Fetch GeoJSON countries for choropleth map
     useEffect(() => {
@@ -24,6 +25,24 @@ const Globe: React.FC<GlobeProps> = ({ activeLayers, liveData, onCountryClick })
             .then(res => res.json())
             .then(setCountries)
             .catch(e => console.error('Failed to load countries geojson:', e));
+    }, []);
+
+    // Fetch Live Tension Data from Backend
+    useEffect(() => {
+        const fetchTension = async () => {
+            try {
+                const resp = await fetch('http://localhost:8000/api/intelligence/tension');
+                if (resp.ok) {
+                    const data = await resp.json();
+                    setTensionData(data);
+                }
+            } catch (err) {
+                console.warn('Failed to fetch tension data:', err);
+            }
+        };
+        fetchTension();
+        const interval = setInterval(fetchTension, 300000); // 5 min refresh
+        return () => clearInterval(interval);
     }, []);
 
     // Dynamic import of react-globe.gl
@@ -183,7 +202,7 @@ const Globe: React.FC<GlobeProps> = ({ activeLayers, liveData, onCountryClick })
                 polygonAltitude={0.005}
                 polygonCapColor={(d: any) => {
                     const name = d.properties.ADMIN;
-                    const tension = MOCK_COUNTRY_TENSION[name] || 10;
+                    const tension = tensionData[name] || MOCK_COUNTRY_TENSION[name] || 10;
                     if (tension >= 90) return 'rgba(255, 0, 0, 0.7)';
                     if (tension >= 75) return 'rgba(255, 100, 0, 0.5)';
                     if (tension >= 60) return 'rgba(200, 160, 0, 0.3)';
@@ -194,11 +213,11 @@ const Globe: React.FC<GlobeProps> = ({ activeLayers, liveData, onCountryClick })
                 polygonLabel={(d: any) => {
                     if (!activeLayers.includes('heatmap')) return '';
                     const name = d.properties.ADMIN;
-                    const tension = MOCK_COUNTRY_TENSION[name] || 0;
+                    const tension = tensionData[name] || MOCK_COUNTRY_TENSION[name] || 0;
                     return `
                         <div style="background: rgba(0,0,0,0.8); padding: 4px 8px; border-radius: 4px; border: 1px solid #333; font-family: monospace;">
                             <div style="color: #fff; font-weight: bold;">${name}</div>
-                            <div style="color: ${tension >= 80 ? '#ff3b3b' : '#00bfff'}">Tension: ${tension}</div>
+                            <div style="color: ${tension >= 80 ? '#ff3b3b' : '#00bfff'}">SENTINEL-SCORE: ${tension}</div>
                         </div>
                     `;
                 }}
